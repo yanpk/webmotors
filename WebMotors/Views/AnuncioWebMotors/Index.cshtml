@@ -1,0 +1,78 @@
+@model PagedResult<AnuncioWebMotorsViewModel>
+
+@{
+    ViewData["Title"] = "Anuncios";
+}
+<h2>Anúncios</h2>
+@Html.AntiForgeryToken()
+<div id="table-container">
+    @Html.Partial("Table", Model)
+</div>
+<!-- Modal Structure -->
+<div id="item-modal" class="modal modal-fixed-footer">
+    <div class="modal-content" id="item-modal-content">
+
+    </div>
+    <div class="modal-footer">
+        <a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat" id="btn-save">Salvar</a>
+    </div>
+</div>
+
+<div class="fixed-action-btn">
+    <a class="btn-floating btn-large waves-effect waves-light indigo" id="create-item" data-url="/anunciowebmotors/"><i class="material-icons">add</i></a>
+</div>
+@section scripts{
+    <script>
+        $(document).ready(function () {
+            $('.js-example-basic-single').select2();
+        });
+
+        $(document).on("change", "#selectMarca", function (e) {
+            e.preventDefault();
+            var idMarca = $("#selectMarca").val();
+            GetModelos(idMarca);
+            var marca = $("#selectMarca option:selected").text();
+            $("#Marca").val(marca);
+        });
+
+        $(document).on("change", "#selectModelo", function (e) {
+            e.preventDefault();
+            var idModelo = $("#selectModelo").val();
+            GetVersao(idModelo);
+            var modelo = $("#selectModelo option:selected").text();
+            $("#Modelo").val(modelo);
+        });
+
+        $(document).on("change", "#selectVersao", function (e) {
+            e.preventDefault();
+            var versao = $("#selectVersao option:selected").text();
+            $("#Versao").val(versao);
+        });
+
+        function GetModelos(idMarca) {
+            var selectbox = $('#selectModelo');
+            selectbox.find('option').remove();
+            var url = '/anunciowebmotors/getmodelos?idMarca=' + idMarca;
+
+            $.get(url, function (data) {
+                $('<option>').val("").text("Selecione o Modelo").attr("disabled", "disabled").attr("selected", "selected").appendTo(selectbox);
+                $.each(data, function (key, value) {
+                    $('<option>').val(value.id).text(value.name).appendTo(selectbox);
+                });
+            });
+        }
+
+        function GetVersao(idModelo) {
+            var selectbox = $('#selectVersao');
+            selectbox.find('option').remove();
+            var url = '/anunciowebmotors/getVersao?idModelo=' + idModelo;
+
+            $.get(url, function (data) {
+                $('<option>').val("").text("Selecione a Versão").attr("disabled", "disabled").attr("selected", "selected").appendTo(selectbox);
+                $.each(data, function (key, value) {
+                    $('<option>').val(value.id).text(value.name).appendTo(selectbox);
+                });
+            });
+        }
+    </script>
+}

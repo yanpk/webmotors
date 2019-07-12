@@ -1,0 +1,14 @@
+version: "3"
+services:
+    testeWebMotors:
+        image: testeWebMotors-sdk-2-1-alpine
+        build: 
+            context: .
+        ports:
+            - "8000:80"
+        depends_on:
+            - db
+    db:
+        image: "mcr.microsoft.com/mssql/server"
+        environment:
+            ACCEPT_EULA: "Y"

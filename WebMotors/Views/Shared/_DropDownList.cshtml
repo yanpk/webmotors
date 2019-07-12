@@ -1,0 +1,11 @@
+﻿@model IEnumerable<SelectListItem>
+
+@{
+    var nome = ViewBag.Nome;
+    var textoAlternativo = ViewBag.TextoAlternativo;
+    var cssClass = "js-example-basic-single";
+    var selectedValue = ViewBag.SelectedValue == null ? null : ViewBag.SelectedValue.ToString();
+}
+<select name="@nome" id="@nome" class="@cssClass" asp-items="@Model">
+    <option value="" disabled selected>@textoAlternativo</option>
+</select>

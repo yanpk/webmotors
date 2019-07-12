@@ -1,0 +1,39 @@
+@model PagedResult<AnuncioWebMotorsViewModel>
+@{
+    Layout = null;
+}
+<table class="table table-stripped" id="table-content" data-url="/anunciowebmotors/table/">
+    <thead>
+        <tr>
+            <th>Id</th>
+            <th>Marca</th>
+            <th>Modelo</th>
+            <th>Versão</th>
+            <th>Ano</th>
+            <th>Quilometragem</th>
+            <th>Observação</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @if (Model != null && Model.Itens != null)
+        {
+            foreach (var item in Model.Itens)
+            {
+                <tr data-id="@item.Id">
+                    <td>@item.Id</td>
+                    <td>@item.Marca</td>
+                    <td>@item.Modelo</td>
+                    <td>@item.Versao</td>
+                    <td>@item.Ano</td>
+                    <td>@item.Quilometragem</td>
+                    <td>@item.Observacao</td>
+                    <td>
+                        <a class="btn-tiny btn-floating waves-effect waves-light blue edit-item" href="#" data-id="@item.Id"><i class="tiny material-icons">edit</i></a>
+                        <a class="btn-tiny btn-floating waves-effect waves-light red delete-item" href="#" data-id="@item.Id"><i class="tiny material-icons">delete</i></a>
+                    </td>
+                </tr>
+            }
+        }
+    </tbody>
+</table>

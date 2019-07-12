@@ -1,0 +1,48 @@
+@model AnuncioWebMotorsViewModel
+@{
+    ViewData["Title"] = "Edit";
+}
+<div class="row">
+    <div class="col s12 text-red">
+        @Html.ValidationSummary()
+    </div>
+</div>
+<div class="row">
+    <form class="col s12" action="/AnuncioWebMotors/edit/" method="post" id="item-form">
+        @Html.AntiForgeryToken()
+        <input type="hidden" asp-for="@Model.Id" />
+        <div class="row">
+            @await Component.InvokeAsync("MarcaDropDownList")
+            <br />
+            <br />
+            <select class="js-example-basic-single" id="selectModelo">
+                <option value="" disabled selected>Selecione o Modelo</option>
+            </select>
+            <br />
+            <br />
+            <select class="js-example-basic-single" id="selectVersao">
+                <option value="" disabled selected>Selecione a Versão</option>
+            </select>
+
+            @Html.HiddenFor(t => t.Marca)
+            @Html.HiddenFor(t => t.Modelo)
+            @Html.HiddenFor(t => t.Versao)
+
+            <div class="input-field col s12">
+                <input asp-for="@Model.Ano" type="number" class="validate" />
+                <label asp-for="@Model.Ano"></label>
+                <span asp-validation-for="@Model.Ano"></span>
+            </div>
+            <div class="input-field col s12">
+                <input asp-for="@Model.Quilometragem" type="number" class="validate" />
+                <label asp-for="@Model.Quilometragem"></label>
+                <span asp-validation-for="@Model.Quilometragem"></span>
+            </div>
+            <div class="input-field col s12">
+                <input asp-for="@Model.Observacao" type="text" class="validate" />
+                <label asp-for="@Model.Observacao"></label>
+                <span asp-validation-for="@Model.Observacao"></span>
+            </div>
+        </div>
+    </form>
+</div>
